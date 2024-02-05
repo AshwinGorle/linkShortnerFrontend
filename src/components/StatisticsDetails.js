@@ -5,7 +5,7 @@ const StatisticsDetails = ({ URL, setInputUrl, setUrlData }) => {
   const { redirectURL, clicks, availableDate, expiryDate, shortURL, password } = URL;
   console.log("URL data ", URL);
   return (
-    <div className="w-full flex flex-col gap-7 ">
+    <div className="w-full flex flex-col gap-3 ">
       <StaticField tittle={"Targeted Link : "} data={redirectURL} />
       <StaticField tittle={"No. of Clicks : "} data={clicks} />
       <StaticField tittle={"Availability Date : "} data={availableDate} />

@@ -36,9 +36,9 @@ const ShowAllUrl = () => {
   };
   return (
     <div className="flex flex-col gap-5 h-full  border-black m-5 bg-white rounded-2xl shadow-md p-10 mx-auto justify-center items-center border-t-8 border-blue-500">
-      <div>
+      <div className="overflow-hidden">
         <div>
-          <h1 className="text-blue-500 text-4xl text-center mb-10">
+          <h1 className="text-blue-500 text-2xl text-center mb-10">
             {" "}
             See Your All URLS{" "}
           </h1>
@@ -54,7 +54,9 @@ const ShowAllUrl = () => {
             </button>
           </div>
         ) : (
+          <div className=" ">
           <UrlList urls={allUrls} />
+          </div>
         )}
         {allUrls ? (
           <div className="mx-auto m-5 flex gap-5">

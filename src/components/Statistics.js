@@ -32,9 +32,9 @@ const Statistics = () => {
     }
   };
   return (
-    <div className="flex flex-col gap-10 h-full  border-black m-5 bg-white rounded-2xl shadow-md p-20 mx-auto justify-center items-center border-t-8 border-blue-500">
+    <div className="flex flex-col gap-10 h-full  border-black m-5 bg-white rounded-2xl shadow-md p-10 mx-auto justify-center items-center border-t-8 border-blue-500">
       <div>
-        <h1 className="text-blue-500 text-4xl text-center mb-10">
+        <h1 className="text-blue-500 text-2xl text-center mb-10">
           {" "}
           Statistcs{" "}
         </h1>
@@ -45,7 +45,7 @@ const Statistics = () => {
           value={inputUrl}
           onChange={(e) => setInputUrl(e.target.value)}
           placeholder="Enter Shortened Url Here"
-          className=" border-b-4 border-blue-500 w-full text-2xl focus:outline-none"
+          className=" border-b-4 border-blue-500 w-full text-lg focus:outline-none"
         />
         <button
           className="bg-blue-500 rounded-md px-4 font-bold text-white shadow-lg p-2"

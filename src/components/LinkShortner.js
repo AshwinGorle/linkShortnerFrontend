@@ -102,23 +102,23 @@ const LinkShortner = () => {
 
   return (
     (error.status == true) ? <h1>{error.message}</h1> :
-    <div className=" flex flex-col gap-10 h-full  border-black m-5 bg-white rounded-2xl shadow-md p-20 mx-auto justify-center items-center border-t-8 border-blue-500">
-      <h1 className=" text-blue-500 text-4xl text-center mb-10">
+    <div className=" flex flex-col gap-5 h-full  border-black m-5 bg-white rounded-2xl shadow-md p-10 mx-auto justify-center items-center border-t-8 border-blue-500">
+      <h1 className=" text-blue-500  text-2xl text-center mb-10">
         {" "}
         URL SHORTNER{" "}
       </h1>
 
-      <div className="w-full flex flex-col gap-4">
+      <div className="w-full  flex flex-col gap-4">
         <input
           type="text"
           value={inputUrl}
           onChange={handleInputUrl}
           placeholder="Paste Link Here"
-          className=" border-b-4 border-blue-500 w-full text-2xl focus:outline-none"
+          className=" border-b-4 border-blue-500 w-full text-md focus:outline-none"
         />
         {shortUrl != "" ? (
           <div className="flex justify-center ">
-            <div className="text-lg rounded-l-md bg-slate-200  p-2 text-blue-500 font-mono">
+            <div className="text-sm rounded-l-md bg-slate-200  p-2 text-blue-500 font-mono">
               {shortUrl}
             </div>
             <button
@@ -149,7 +149,7 @@ const LinkShortner = () => {
         ""
       )}
 
-      <div className="flex flex-wrap gap-5  bg-red">
+      <div className="flex flex-wrap gap-2  bg-red">
         <Checkbox name="Customise link" setStatus={setCustomLink} />
         <Checkbox name="Link with password" setStatus={setLinkPassword} />
         <Checkbox name="Available Date" setStatus={setLinkAvailableDate} />
