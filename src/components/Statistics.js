@@ -2,33 +2,40 @@ import React, { useState } from "react";
 import StatisticsDetails from "./StatisticsDetails";
 import { useNavigate } from "react-router";
 import { BASE_URL } from "../static";
-
+import Loader from "./Loader";
 const Statistics = () => {
   const [urlData, setUrlData] = useState(undefined);
   const [inputUrl, setInputUrl] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const handleAnalyse = async () => {
+    setIsLoading(true);
+    setErrorMessage("");
     const id = inputUrl.slice(-5);
     console.log("id to fetch ", id);
-
-    try {
-      const response = await fetch(`${BASE_URL}/url/get/data/${id}`,{
-        headers : {
-          "authorization" : localStorage.getItem("token")
+    if (!id) {
+      setErrorMessage("Enter Valid Url !");
+      setIsLoading(false);
+    } else {
+      try {
+        const response = await fetch(`${BASE_URL}/url/get/data/${id}`, {
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        });
+        if (!response.ok) {
+          if (response.status == 401) {
+            navigate("/");
+          }
         }
-      });
-      if (!response.ok) {
-        if(response.status == 401){
-          console.log("unauthorized user");
-          navigate('/');
-        }else{
-          throw new Error("invalid url");
-        }
+        const URL = await response.json();
+        setUrlData(URL);
+      } catch (err) {
+        setErrorMessage("Enter Valid Url !");
+      } finally {
+        setIsLoading(false);
       }
-      const URL = await response.json();
-      setUrlData(URL);
-    } catch (err) {
-      console.log("get url data error : ", err);
     }
   };
   return (
@@ -40,6 +47,7 @@ const Statistics = () => {
         </h1>
       </div>
       <div className="w-full flex flex-col gap-10">
+        <div>
         <input
           type="text"
           value={inputUrl}
@@ -47,14 +55,24 @@ const Statistics = () => {
           placeholder="Enter Shortened Url Here"
           className=" border-b-4 border-blue-500 w-full text-lg focus:outline-none"
         />
+        {errorMessage ? <p className=" text-pretty text-sm text-red-400">{errorMessage}</p> : '' }
+        </div>
         <button
-          className="bg-blue-500 rounded-md px-4 font-bold text-white shadow-lg p-2"
+          className=" flex justify-center bg-blue-500 rounded-md px-4 font-bold text-white shadow-lg p-2"
           onClick={handleAnalyse}
         >
-          Analyse
+          {isLoading ? <Loader size={25} color={"#ffffff"} /> : "Analyse"}
         </button>
       </div>
-      {urlData ? <StatisticsDetails URL={urlData} setInputUrl={setInputUrl} setUrlData={setUrlData}/> : ""}
+      {urlData ? (
+        <StatisticsDetails
+          URL={urlData}
+          setInputUrl={setInputUrl}
+          setUrlData={setUrlData}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

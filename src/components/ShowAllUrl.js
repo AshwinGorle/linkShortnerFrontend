@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import StatisticsDetails from "./StatisticsDetails";
 import UrlList from "./UrlList";
 import { BASE_URL } from "../static";
-
+import Loader from "./Loader";
 const ShowAllUrl = () => {
   const [urlData, setUrlData] = useState(undefined);
   const [inputUrl, setInputUrl] = useState("");
   const [allUrls, setAllUrls] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleShowAllUrls = async () => {
+    setIsLoading(true);
     const id = inputUrl.slice(-5);
     console.log("id to fetch ", id);
 
@@ -32,6 +34,8 @@ const ShowAllUrl = () => {
       setAllUrls(urls);
     } catch (err) {
       console.log("urldetails fetch error", err);
+    }finally{
+      setIsLoading(false);
     }
   };
   return (
@@ -50,7 +54,7 @@ const ShowAllUrl = () => {
               className="bg-blue-500 font-thin text-2xl rounded-md px-4 font-bold text-white shadow-lg p-2 mx-auto"
               onClick={handleShowAllUrls}
             >
-              Show My Urls
+              {isLoading ? <Loader size={25} color={"#ffffff"}/> : "Show My URLS" }
             </button>
           </div>
         ) : (
@@ -64,7 +68,7 @@ const ShowAllUrl = () => {
             className="bg-blue-500 rounded-md text-lg px-8 font-thin text-white shadow-lg p-2 mx-auto"
             onClick={handleShowAllUrls}
           >
-            Refresh
+            {isLoading ? <Loader size={25} color={"#ffffff"}/> : "Refresh" }
           </button>
           <button
             className="bg-blue-500 rounded-md text-lg px-8 font-thin text-white shadow-lg p-2 mx-auto"

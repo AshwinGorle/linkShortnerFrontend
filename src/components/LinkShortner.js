@@ -85,7 +85,7 @@ const LinkShortner = () => {
 
       setInputUrl(data.shortUrl);
     } catch (error) {
-      return <h1>Error 401 Unauthorized</h1>
+      console.log("this is the error : ",error)
     } finally {
      
     }

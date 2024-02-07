@@ -3,16 +3,18 @@ import { redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { BASE_URL } from "../static";
+import Loader from "./Loader";
 
 export default function Login() {
      const [inputEmail, setInputEmail] = useState("");
      const [inputPassword, setInputPassword] = useState("");
+     const [isLoading, setIsLoading] = useState(false);
      const navigate = useNavigate();
      const handleSubmit = async (e)=>{
+      setIsLoading(true);
       e.preventDefault()
-      console.log("entered in handle submit")
         try{
-          const response = await fetch(`${BASE_URL}/login`,{
+          const response = await fetch(`${BASE_URL}/user/login`,{
             method : "POST",
             headers: {
               "Content-Type": "application/json",
@@ -32,6 +34,8 @@ export default function Login() {
           }
         }catch(err){
            console.log("user login error : ", err)
+        }finally{
+          setIsLoading(true);
         }
      }
   return (
@@ -72,13 +76,13 @@ export default function Login() {
                   class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                 />
               </div>
-              <div class="flex items-baseline justify-between">
-                <button class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-900"
+              <div class="flex flex-col ">
+                <button class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-900 flex justify-center"
                 onClick={handleSubmit}
                 >
-                  Login
+                    {isLoading ? <Loader size={25} color={"#ffffff"}/> : "Login" }
                 </button>
-                <div className=" flex flex-col justify-center">
+                <div className=" flex  justify-between text-blue-600">
                 <Link to="/signup">
                   Forgot password?
                 </Link>
