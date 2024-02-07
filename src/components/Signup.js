@@ -3,6 +3,7 @@ import { redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { BASE_URL } from "../static";
+import Loader from "./Loader";
 
 export default function Signup() {
      const [inputEmail, setInputEmail] = useState("");
@@ -10,9 +11,13 @@ export default function Signup() {
      const [inputPassword, setInputPassword] = useState("");
      const [inputPasswordCnfirmation, setInputPasswordConfirmation] = useState("");
      const [inputTC, setInputTC] = useState(true);
+     const [isLoading, setIsLoading] = useState(false);
+
+
      const navigate = useNavigate();
      const handleSubmit = async (e)=>{
-      e.preventDefault()
+       e.preventDefault()
+       setIsLoading(true);
       console.log("entered in handle submit")
         try{
           const response = await fetch(`${BASE_URL}/user/register`,{
@@ -26,22 +31,24 @@ export default function Signup() {
               password : inputPassword,
               password_confirmation : inputPasswordCnfirmation,
               tc : inputTC,
-
+              
             })
           })
           console.log(response)
           if(response.ok){
             const data = await response.json();
-             localStorage.setItem("token", `Bearer ${data.token}`);
-             navigate('/home')
+            localStorage.setItem("token", `Bearer ${data.token}`);
+            navigate('/home')
           }else{
             console.log("signup failed");
             navigate('/signup')
           }
         }catch(err){
-           console.log("user signup error : ", err)
+          console.log("user signup error : ", err)
+        }finally{
+          setIsLoading(false);
         }
-     }
+      }
   return (
     
       <div class="flex items-center justify-center min-h-screen bg-gray-100 rounded-lg">
@@ -109,7 +116,7 @@ export default function Signup() {
                 <button class="px-6 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-900"
                 onClick={handleSubmit}
                 >
-                  Signup
+                  {isLoading ? <Loader size={25} color={"#ffffff"} /> : "Signup"}
                 </button>
                 <div className=" flex flex-col justify-center">
         

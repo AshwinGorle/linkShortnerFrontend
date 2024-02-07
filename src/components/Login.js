@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { BASE_URL } from "../static";
 import Loader from "./Loader";
 
+
 export default function Login() {
      const [inputEmail, setInputEmail] = useState("");
      const [inputPassword, setInputPassword] = useState("");
